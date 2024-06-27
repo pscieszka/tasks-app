@@ -12,12 +12,16 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private DailyTaskManager dailyTaskManager;
+    private PercentageCircleView percentageCircleView;
+
     private String selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        percentageCircleView = findViewById(R.id.percentageCircle);
 
         LinearLayout taskContainer = findViewById(R.id.taskContainer);
         dailyTaskManager = new DailyTaskManager(this, taskContainer);
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         dailyTaskManager.addTask(selectedDate, "Task 3", "Description for Task 3",false);
 
         dailyTaskManager.displayTasks(selectedDate);
-
+        updatePercentage(selectedDate);
         ImageButton calendarButton = findViewById(R.id.calendarButton);
         calendarButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
@@ -40,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private String getCurrentDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return sdf.format(new Date());
+    }
+    private void updatePercentage(String date) {
+        double percentage = dailyTaskManager.getPercentageDone(date);
+        percentageCircleView.setPercentage((int) percentage);
     }
 }
 
