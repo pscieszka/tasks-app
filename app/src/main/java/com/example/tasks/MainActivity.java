@@ -13,6 +13,8 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private DailyTaskManager dailyTaskManager;
     private PercentageCircleView percentageCircleView;
+    private FooterManager footerManager;
+
 
     private String selectedDate;
 
@@ -21,7 +23,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LinearLayout footerLayout = findViewById(R.id.footer);
+        footerManager = new FooterManager(this, footerLayout);
+
         percentageCircleView = findViewById(R.id.percentageCircle);
+        footerManager.setActiveButton(findViewById(R.id.homeButton));
+
 
         LinearLayout taskContainer = findViewById(R.id.taskContainer);
         dailyTaskManager = new DailyTaskManager(this, taskContainer);
@@ -34,11 +41,22 @@ public class MainActivity extends AppCompatActivity {
 
         dailyTaskManager.displayTasks(selectedDate);
         updatePercentage(selectedDate);
+
+
         ImageButton calendarButton = findViewById(R.id.calendarButton);
+
+
         calendarButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
             startActivity(intent);
         });
+
+//        ImageButton homeButton = findViewById(R.id.homeButton);
+//        homeButton.setOnClickListener(v -> {
+//            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//            startActivity(intent);
+//        });
+
     }
 
     private String getCurrentDate() {

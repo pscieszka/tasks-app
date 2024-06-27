@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/grey_tiles"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <ImageButton
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@android:drawable/ic_menu_compass"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Home Button"/>
+
+    <ImageButton
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@android:drawable/ic_menu_add"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Add Button"/>
+
+    <ImageButton
+        android:id="@+id/calendarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@android:drawable/ic_menu_my_calendar"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Calendar Button"/>
+</LinearLayout>

@@ -1,8 +1,10 @@
 package com.example.tasks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -37,6 +39,13 @@ public class CalendarActivity extends AppCompatActivity {
         dailyTaskManager.addTask(selectedDate, "Task 3", "Description for Task 3",true);
 
         dailyTaskManager.displayTasks(selectedDate);
+
+        ImageButton homeButton = findViewById(R.id.homeButton);
+
+        homeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 }
 
