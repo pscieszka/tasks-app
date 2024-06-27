@@ -8,31 +8,47 @@
 
     <ImageButton
         android:id="@+id/homeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@android:drawable/ic_menu_compass"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/ic_home_button"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="Home Button"/>
 
     <ImageButton
+        android:id="@+id/calendarButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/ic_calendar_button"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Calendar Button"/>
+
+    <ImageButton
         android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@android:drawable/ic_menu_add"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:src="@drawable/ic_add_button"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="Add Button"/>
 
     <ImageButton
-        android:id="@+id/calendarButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@android:drawable/ic_menu_my_calendar"
+        android:id="@+id/statisticsButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/ic_stats_button"
         android:background="?attr/selectableItemBackground"
-        android:contentDescription="Calendar Button"/>
+        android:contentDescription="Statistics Button"/>
+
+    <ImageButton
+        android:id="@+id/settingsButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/ic_settings_button"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Settings Button"/>
+
 </LinearLayout>
