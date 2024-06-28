@@ -49,6 +49,7 @@
             android:padding="16dp">
         </LinearLayout>
     </ScrollView>
+
     <include
         android:id="@+id/footer"
         layout="@layout/footer"

@@ -5,7 +5,7 @@ public class Task {
     private String description;
     private boolean status;
 
-    public Task(String title, String description,boolean status) { // defualt na false zmienic potem
+    public Task(String title, String description, boolean status) { // defualt na false zmienic potem
         this.title = title;
         this.description = description;
         this.status = status;

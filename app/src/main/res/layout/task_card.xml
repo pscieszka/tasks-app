@@ -1,25 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:elevation="4dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:padding="16dp"
-    android:background="@color/grey_tiles"
-    android:layout_marginBottom="8dp">
+    android:background="@drawable/rounded_background"
+    android:elevation="4dp">
 
-    <TextView
-        android:id="@+id/taskTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"/>
+<LinearLayout
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:layout_weight="1"
+android:orientation="vertical"
+android:paddingEnd="16dp">
 
-    <TextView
-        android:id="@+id/taskDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"/>
+<TextView
+    android:id="@+id/taskTitle"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Title"
+    android:textSize="18sp"
+    android:textColor="@android:color/white" />
+
+<TextView
+    android:id="@+id/taskDescription"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Description"
+    android:textSize="14sp"
+    android:textColor="@android:color/white" />
 </LinearLayout>
+
+<CheckBox
+android:id="@+id/taskDone"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_gravity="center_vertical"
+android:text="Done"
+android:textColor="@android:color/white"
+android:paddingStart="8dp" />
+
+    </LinearLayout>
+    </LinearLayout>
+
