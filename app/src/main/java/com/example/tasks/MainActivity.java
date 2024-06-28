@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
         ImageButton calendarButton = findViewById(R.id.calendarButton);
 
 
-        calendarButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
-            startActivity(intent);
-        });
 
 
     }

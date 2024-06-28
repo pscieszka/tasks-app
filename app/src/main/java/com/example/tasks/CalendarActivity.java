@@ -15,11 +15,17 @@ import java.util.Locale;
 public class CalendarActivity extends AppCompatActivity {
     private DailyTaskManager dailyTaskManager;
     private String selectedDate;
+    private FooterManager footerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
+        LinearLayout footerLayout = findViewById(R.id.footer);
+        footerManager = new FooterManager(this, footerLayout);
+
+        footerManager.setActiveButton(findViewById(R.id.calendarButton));
 
         CalendarView calendarView = findViewById(R.id.calendarView);
         LinearLayout taskContainer = findViewById(R.id.taskContainer);
@@ -42,10 +48,6 @@ public class CalendarActivity extends AppCompatActivity {
 
         ImageButton homeButton = findViewById(R.id.homeButton);
 
-        homeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CalendarActivity.this, MainActivity.class);
-            startActivity(intent);
-        });
     }
 }
 

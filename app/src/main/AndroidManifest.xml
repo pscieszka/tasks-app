@@ -22,6 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".CalendarActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".AddActivity" />
+        <activity android:name=".StatsActivity" />
 
     </application>
 
