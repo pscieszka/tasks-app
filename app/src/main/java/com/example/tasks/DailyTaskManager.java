@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,16 +17,18 @@ public class DailyTaskManager {
     private Map<String, List<Task>> dailyTasks;
     private LinearLayout taskContainer;
     private LayoutInflater inflater;
+    private Context context;
 
     public DailyTaskManager(Context context, LinearLayout taskContainer) {
         this.dailyTasks = new HashMap<>();
         this.taskContainer = taskContainer;
         this.inflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
-    public void addTask(String date, String title, String description,boolean status) {
+    public void addTask(String date, String title, String description, boolean status) {
         List<Task> tasks = dailyTasks.getOrDefault(date, new ArrayList<>());
-        Task newTask = new Task(title, description,status);
+        Task newTask = new Task(title, description, status);
         tasks.add(newTask);
         dailyTasks.put(date, tasks);
     }
@@ -65,17 +68,25 @@ public class DailyTaskManager {
         titleView.setText(task.getTitle());
         descriptionView.setText(task.getDescription());
 
+        taskView.setOnClickListener(v -> {
+            String taskName = task.getTitle();
+            String taskDescription = task.getDescription();
+
+            TaskDialogFragment taskDialogFragment = TaskDialogFragment.newInstance(taskName, taskDescription);
+            taskDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "TaskDialogFragment");
+        });
+
         return taskView;
     }
 
-    public double getPercentageDone(String date){
+    public double getPercentageDone(String date) {
         List<Task> tasks = dailyTasks.get(date);
         if (tasks == null || tasks.isEmpty()) {
             return 100.0;
         }
         int cnt = 0;
-        for(Task task : tasks){
-            if(task.getStatus()){
+        for (Task task : tasks) {
+            if (task.getStatus()) {
                 cnt++;
             }
         }

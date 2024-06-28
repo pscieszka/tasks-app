@@ -52,12 +52,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        ImageButton homeButton = findViewById(R.id.homeButton);
-//        homeButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//            startActivity(intent);
-//        });
-
     }
 
     private String getCurrentDate() {
