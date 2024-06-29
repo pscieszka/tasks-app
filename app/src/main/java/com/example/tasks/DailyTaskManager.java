@@ -59,6 +59,9 @@ public class DailyTaskManager {
             }
         }
     }
+    public void updateTasksList(String date) {
+        displayTasks(date);
+    }
 
     private View createTaskView(Task task) {
         View taskView = inflater.inflate(R.layout.task_card, null);
