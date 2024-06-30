@@ -77,8 +77,68 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginTop="8dp" />
+
+    <!-- "Due date" label -->
+    <TextView
+        android:id="@+id/due_date_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Due date"
+        android:textColor="@color/grey"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/description_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/estimated_time_label"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/estimated_time_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Estimated time"
+        android:textColor="@color/grey"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/description_input"
+        app:layout_constraintStart_toEndOf="@id/due_date_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/due_date_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:hint=""
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/due_date_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/estimated_time_input"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
+
+
+    <EditText
+        android:id="@+id/estimated_time_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:hint=""
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/estimated_time_label"
+        app:layout_constraintStart_toEndOf="@id/due_date_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
+
     <include
         android:id="@+id/footer"
         layout="@layout/footer"
