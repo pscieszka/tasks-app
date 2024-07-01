@@ -3,11 +3,17 @@ package com.example.tasks;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +25,14 @@ public class DailyTaskManager {
     private LayoutInflater inflater;
     private Context context;
 
+    private static final String FILE_NAME = "daily_tasks.json";
+    private static final Gson gson = new Gson();
+
     public DailyTaskManager(Context context, LinearLayout taskContainer) {
-        this.dailyTasks = new HashMap<>();
+        this.dailyTasks = readTasksFromFile(context);
+        if (this.dailyTasks == null) {
+            this.dailyTasks = new HashMap<>();
+        }
         this.taskContainer = taskContainer;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
@@ -31,12 +43,14 @@ public class DailyTaskManager {
         Task newTask = new Task(title, description, status);
         tasks.add(newTask);
         dailyTasks.put(date, tasks);
+        saveTasksToFile();
     }
 
     public void deleteTask(String date, int index) {
         List<Task> tasks = dailyTasks.get(date);
         if (tasks != null && index >= 0 && index < tasks.size()) {
             tasks.remove(index);
+            saveTasksToFile();
         }
     }
 
@@ -46,6 +60,7 @@ public class DailyTaskManager {
             Task task = tasks.get(index);
             task.setTitle(newTitle);
             task.setDescription(newDescription);
+            saveTasksToFile();
         }
     }
 
@@ -58,9 +73,6 @@ public class DailyTaskManager {
                 taskContainer.addView(taskView);
             }
         }
-    }
-    public void updateTasksList(String date) {
-        displayTasks(date);
     }
 
     private View createTaskView(Task task) {
@@ -97,5 +109,59 @@ public class DailyTaskManager {
 
         String formattedPercentage = String.format("%.2f", percentage);
         return Double.parseDouble(formattedPercentage);
+    }
+
+    private void saveTasksToFile() {
+        String json = gson.toJson(dailyTasks);
+        FileOutputStream fos = null;
+        try {
+            fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fos.write(json.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private Map<String, List<Task>> readTasksFromFile(Context context) {
+        FileInputStream fis = null;
+        InputStreamReader isr = null;
+        BufferedReader reader = null;
+        try {
+            fis = context.openFileInput(FILE_NAME);
+            isr = new InputStreamReader(fis);
+            reader = new BufferedReader(isr);
+            StringBuilder json = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                json.append(line);
+            }
+            Type taskMapType = new TypeToken<Map<String, List<Task>>>() {}.getType();
+            return gson.fromJson(json.toString(), taskMapType);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+                if (isr != null) {
+                    isr.close();
+                }
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

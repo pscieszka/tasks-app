@@ -2,9 +2,10 @@ package com.example.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     private DailyTaskManager dailyTaskManager;
     private PercentageCircleView percentageCircleView;
     private FooterManager footerManager;
-
 
     private String selectedDate;
 
@@ -29,34 +29,42 @@ public class MainActivity extends AppCompatActivity {
         percentageCircleView = findViewById(R.id.percentageCircle);
         footerManager.setActiveButton(findViewById(R.id.homeButton));
 
-
         LinearLayout taskContainer = findViewById(R.id.taskContainer);
         dailyTaskManager = new DailyTaskManager(this, taskContainer);
 
         selectedDate = getCurrentDate();
 
-        dailyTaskManager.addTask(selectedDate, "Task 1", "Description for Task 1",true);
-        dailyTaskManager.addTask(selectedDate, "Task 2", "Description for Task 2",true);
-        dailyTaskManager.addTask(selectedDate, "Task 3", "Description for Task 3",false);
-
         dailyTaskManager.displayTasks(selectedDate);
         updatePercentage(selectedDate);
 
-
         ImageButton calendarButton = findViewById(R.id.calendarButton);
+        calendarButton.setOnClickListener(v -> {
+        });
 
+        handleNewTask();
+    }
 
+    private void handleNewTask() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("title") && intent.hasExtra("description")) {
+            String title = intent.getStringExtra("title");
+            String description = intent.getStringExtra("description");
+            boolean status = intent.getBooleanExtra("status", false);
 
+            dailyTaskManager.addTask(selectedDate, title, description, status);
+            dailyTaskManager.displayTasks(selectedDate);
 
+            updatePercentage(selectedDate);
+        }
     }
 
     private String getCurrentDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return sdf.format(new Date());
     }
+
     private void updatePercentage(String date) {
         double percentage = dailyTaskManager.getPercentageDone(date);
         percentageCircleView.setPercentage((int) percentage);
     }
 }
-

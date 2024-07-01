@@ -40,10 +40,6 @@ public class CalendarActivity extends AppCompatActivity {
             Toast.makeText(CalendarActivity.this, "Selected date: " + selectedDate, Toast.LENGTH_SHORT).show();
         });
 
-        dailyTaskManager.addTask(selectedDate, "Task 1", "Description for Task 1",true);
-        dailyTaskManager.addTask(selectedDate, "Task 2", "Description for Task 2",true);
-        dailyTaskManager.addTask(selectedDate, "Task 3", "Description for Task 3",true);
-
         dailyTaskManager.displayTasks(selectedDate);
 
         ImageButton homeButton = findViewById(R.id.homeButton);
