@@ -2,6 +2,7 @@ package com.example.tasks;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -37,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
         dueDateInput = findViewById(R.id.due_date_input);
         estimatedTimeInput = findViewById(R.id.estimated_time_input);
 
-        findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.add_task_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveTask();
@@ -50,6 +51,7 @@ public class AddActivity extends AppCompatActivity {
         String description = descriptionInput.getText().toString().trim();
         String dueDate = dueDateInput.getText().toString().trim();
         String estimatedTime = estimatedTimeInput.getText().toString().trim();
+        System.out.println(title+description+dueDate+estimatedTime);
 
         if (title.isEmpty() || description.isEmpty() || dueDate.isEmpty() || estimatedTime.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
