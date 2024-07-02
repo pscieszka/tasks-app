@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
 
 public class TaskDialogFragment extends DialogFragment {
     private static final String ARG_TASK_NAME = "task_name";
@@ -39,12 +39,26 @@ public class TaskDialogFragment extends DialogFragment {
         taskDate = getArguments().getString(ARG_TASK_DATE);
         taskIndex = getArguments().getInt(ARG_TASK_INDEX);
 
-        TextView taskNameTextView = view.findViewById(R.id.taskName);
-        TextView taskDescriptionTextView = view.findViewById(R.id.taskDescription);
+        EditText editTaskTitle = view.findViewById(R.id.editTaskTitle);
+        EditText editTaskDescription = view.findViewById(R.id.editTaskDescription);
+        EditText editTaskDate = view.findViewById(R.id.editTaskDate);
+        EditText editTaskTime = view.findViewById(R.id.editTaskTime);
+        Button saveTaskButton = view.findViewById(R.id.saveTask);
         Button deleteTaskButton = view.findViewById(R.id.deleteTask);
 
-        taskNameTextView.setText(taskName);
-        taskDescriptionTextView.setText(taskDescription);
+        editTaskTitle.setText(taskName);
+        editTaskDescription.setText(taskDescription);
+
+        saveTaskButton.setOnClickListener(v -> {
+            String newTitle = editTaskTitle.getText().toString();
+            String newDescription = editTaskDescription.getText().toString();
+            String newDate = editTaskDate.getText().toString();
+            String newTime = editTaskTime.getText().toString();
+
+            dailyTaskManager.editTask(taskDate, taskIndex, newTitle, newDescription);
+            dailyTaskManager.displayTasks(taskDate);
+            dismiss();
+        });
 
         deleteTaskButton.setOnClickListener(v -> {
             dailyTaskManager.deleteTask(taskDate, taskIndex);

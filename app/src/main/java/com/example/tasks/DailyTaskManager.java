@@ -54,6 +54,16 @@ public class DailyTaskManager {
         }
     }
 
+    public void editTask(String date, int index, String newTitle, String newDescription) {
+        List<Task> tasks = dailyTasks.get(date);
+        if (tasks != null && index >= 0 && index < tasks.size()) {
+            Task task = tasks.get(index);
+            task.setTitle(newTitle);
+            task.setDescription(newDescription);
+            saveTasksToFile();
+        }
+    }
+
     public void updateTask(String date, int index, String newTitle, String newDescription) {
         List<Task> tasks = dailyTasks.get(date);
         if (tasks != null && index >= 0 && index < tasks.size()) {
@@ -75,7 +85,6 @@ public class DailyTaskManager {
             }
         }
     }
-
 
     private View createTaskView(Task task, String date, int index) {
         View taskView = inflater.inflate(R.layout.task_card, null);
@@ -135,36 +144,30 @@ public class DailyTaskManager {
 
     private Map<String, List<Task>> readTasksFromFile(Context context) {
         FileInputStream fis = null;
-        InputStreamReader isr = null;
         BufferedReader reader = null;
         try {
             fis = context.openFileInput(FILE_NAME);
-            isr = new InputStreamReader(fis);
-            reader = new BufferedReader(isr);
-            StringBuilder json = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                json.append(line);
-            }
-            Type taskMapType = new TypeToken<Map<String, List<Task>>>() {}.getType();
-            return gson.fromJson(json.toString(), taskMapType);
+            reader = new BufferedReader(new InputStreamReader(fis));
+            Type type = new TypeToken<Map<String, List<Task>>>() {}.getType();
+            return gson.fromJson(reader, type);
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
-            try {
-                if (reader != null) {
+            if (reader != null) {
+                try {
                     reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                if (isr != null) {
-                    isr.close();
-                }
-                if (fis != null) {
+            }
+            if (fis != null) {
+                try {
                     fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
-        return null;
     }
 }
