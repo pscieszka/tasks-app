@@ -9,11 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class TaskDialogFragment extends DialogFragment {
     private static final String ARG_TASK_NAME = "task_name";
     private static final String ARG_TASK_DESCRIPTION = "task_description";
+    private static final String ARG_TASK_DATE = "task_date";
+    private static final String ARG_TASK_INDEX = "task_index";
+
+    private DailyTaskManager dailyTaskManager;
+    private String taskDate;
+    private int taskIndex;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,12 +36,21 @@ public class TaskDialogFragment extends DialogFragment {
 
         String taskName = getArguments().getString(ARG_TASK_NAME);
         String taskDescription = getArguments().getString(ARG_TASK_DESCRIPTION);
+        taskDate = getArguments().getString(ARG_TASK_DATE);
+        taskIndex = getArguments().getInt(ARG_TASK_INDEX);
 
         TextView taskNameTextView = view.findViewById(R.id.taskName);
         TextView taskDescriptionTextView = view.findViewById(R.id.taskDescription);
+        Button deleteTaskButton = view.findViewById(R.id.deleteTask);
 
         taskNameTextView.setText(taskName);
         taskDescriptionTextView.setText(taskDescription);
+
+        deleteTaskButton.setOnClickListener(v -> {
+            dailyTaskManager.deleteTask(taskDate, taskIndex);
+            dailyTaskManager.displayTasks(taskDate);
+            dismiss();
+        });
 
         return view;
     }
@@ -48,12 +64,18 @@ public class TaskDialogFragment extends DialogFragment {
         }
     }
 
-    public static TaskDialogFragment newInstance(String taskName, String taskDescription) {
+    public static TaskDialogFragment newInstance(String taskName, String taskDescription, String taskDate, int taskIndex) {
         TaskDialogFragment fragment = new TaskDialogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TASK_NAME, taskName);
         args.putString(ARG_TASK_DESCRIPTION, taskDescription);
+        args.putString(ARG_TASK_DATE, taskDate);
+        args.putInt(ARG_TASK_INDEX, taskIndex);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setDailyTaskManager(DailyTaskManager dailyTaskManager) {
+        this.dailyTaskManager = dailyTaskManager;
     }
 }

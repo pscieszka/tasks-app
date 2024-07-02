@@ -68,14 +68,16 @@ public class DailyTaskManager {
         taskContainer.removeAllViews();
         List<Task> tasks = dailyTasks.get(date);
         if (tasks != null) {
-            for (Task task : tasks) {
-                View taskView = createTaskView(task);
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                View taskView = createTaskView(task, date, i);
                 taskContainer.addView(taskView);
             }
         }
     }
 
-    private View createTaskView(Task task) {
+
+    private View createTaskView(Task task, String date, int index) {
         View taskView = inflater.inflate(R.layout.task_card, null);
         TextView titleView = taskView.findViewById(R.id.taskTitle);
         TextView descriptionView = taskView.findViewById(R.id.taskDescription);
@@ -87,7 +89,8 @@ public class DailyTaskManager {
             String taskName = task.getTitle();
             String taskDescription = task.getDescription();
 
-            TaskDialogFragment taskDialogFragment = TaskDialogFragment.newInstance(taskName, taskDescription);
+            TaskDialogFragment taskDialogFragment = TaskDialogFragment.newInstance(taskName, taskDescription, date, index);
+            taskDialogFragment.setDailyTaskManager(this);
             taskDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "TaskDialogFragment");
         });
 
