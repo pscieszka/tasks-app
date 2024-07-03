@@ -3,11 +3,15 @@ package com.example.tasks;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -44,6 +48,7 @@ public class DailyTaskManager {
         tasks.add(newTask);
         dailyTasks.put(date, tasks);
         saveTasksToFile();
+        notifyTaskStatusChanged();
     }
 
     public void deleteTask(String date, int index) {
@@ -51,6 +56,7 @@ public class DailyTaskManager {
         if (tasks != null && index >= 0 && index < tasks.size()) {
             tasks.remove(index);
             saveTasksToFile();
+            notifyTaskStatusChanged();
         }
     }
 
@@ -61,6 +67,7 @@ public class DailyTaskManager {
             task.setTitle(newTitle);
             task.setDescription(newDescription);
             saveTasksToFile();
+            notifyTaskStatusChanged();
         }
     }
 
@@ -90,9 +97,15 @@ public class DailyTaskManager {
         View taskView = inflater.inflate(R.layout.task_card, null);
         TextView titleView = taskView.findViewById(R.id.taskTitle);
         TextView descriptionView = taskView.findViewById(R.id.taskDescription);
+        CheckBox doneCheckBox = taskView.findViewById(R.id.taskDone);
 
         titleView.setText(task.getTitle());
         descriptionView.setText(task.getDescription());
+        doneCheckBox.setChecked(task.getStatus());
+
+        doneCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            setTaskDone(date, index, isChecked);
+        });
 
         taskView.setOnClickListener(v -> {
             String taskName = task.getTitle();
@@ -104,6 +117,21 @@ public class DailyTaskManager {
         });
 
         return taskView;
+    }
+
+    public void setTaskDone(String date, int index, boolean isDone) {
+        List<Task> tasks = dailyTasks.get(date);
+        if (tasks != null && index >= 0 && index < tasks.size()) {
+            tasks.get(index).setStatus(isDone);
+            saveTasksToFile();
+            notifyTaskStatusChanged();
+        }
+    }
+
+    private void notifyTaskStatusChanged() {
+        if (context instanceof MainActivity) {
+            ((MainActivity) context).updatePercentage(((MainActivity) context).getCurrentDate());
+        }
     }
 
     public double getPercentageDone(String date) {

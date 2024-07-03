@@ -2,7 +2,6 @@ package com.example.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,10 +36,6 @@ public class MainActivity extends AppCompatActivity {
         dailyTaskManager.displayTasks(selectedDate);
         updatePercentage(selectedDate);
 
-        ImageButton calendarButton = findViewById(R.id.calendarButton);
-        calendarButton.setOnClickListener(v -> {
-        });
-
         handleNewTask();
     }
 
@@ -58,12 +53,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String getCurrentDate() {
+    public String getCurrentDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return sdf.format(new Date());
     }
 
-    private void updatePercentage(String date) {
+    public void updatePercentage(String date) {
         double percentage = dailyTaskManager.getPercentageDone(date);
         percentageCircleView.setPercentage((int) percentage);
     }
